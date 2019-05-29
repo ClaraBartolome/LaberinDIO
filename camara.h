@@ -40,12 +40,7 @@ public:
 		Vector3D dir = { -sin(ry) , 0 , cos(ry) }; //MOVIMIENTO DIRECCION
 		setPos(getPos() - dir * dt);
 
-		if (getPos().getX() >= 12, 5 && getPos().getX() <= 7, 5 && getPos().getY() == 1.85 && getPos().getZ() <= -47) {
-			cout << "Ganaste \n";
-			cout << "Pulsa F para iniciar una mueva partida \n";
-			setPos(Vector3D(1003, 3, 0));
-			setRot(Vector3D(90, 0, 0));
-		}
+		
 	}
 
 	void render() {

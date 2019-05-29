@@ -25,7 +25,29 @@ Escena e;
 
 bool jugar = false;
 
-int timer = 0;
+void write() {
+	ofstream myfile("Ranking.txt");
+	if (myfile.is_open()) {
+		myfile << "Puntuacion: ";
+		myfile << e.getPoints();
+		myfile.close();
+	}
+	else
+		cout << "Unable to openfile";
+}
+
+void read() {
+	string line;
+	ifstream myfile("Ranking.txt");
+	if (myfile.is_open()) {
+		while (getline(myfile, line)) {
+			cout << line << "\ n";
+		}
+		myfile.close();
+	}
+	else
+		cout << "Unable to open file";
+}
 
 void menu() {
 	cout << "--------------------------------  \n";
@@ -107,6 +129,9 @@ void keyPressed(unsigned char key, int px, int py) {
 		cam.setPos(Vector3D(0, 1.85, 5));
 		e.addC(cam);
 		cout << " ¡A jugar!";
+		cout << " \n";
+
+		
 		break;
 	case 'R':
 	case 'r':
@@ -120,8 +145,12 @@ void keyPressed(unsigned char key, int px, int py) {
 		break;
 	case 'F':
 	case 'f':
+		if (jugar == false) {
 		cam.setPos(Vector3D(0, 1.85, 5));
 		e.addC(cam);
+		e.setPoints(0);
+		}
+		
 		break;
 	case 'n':
 	case 'N':
@@ -156,7 +185,7 @@ void init(void) {
 	glEnable(GL_COLOR_MATERIAL);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
-	cam.setPos(Vector3D(0, 1.85, 300)); // JUGADOR
+	cam.setPos(Vector3D(0, 1.85, 300)); // JUGADOR FUERA MAPA
 	camf.setPos(Vector3D(0, 0, 80)); // MAPA
 	camf.setRot(Vector3D(90, 0, 0));
 
@@ -680,11 +709,13 @@ void idle(void) {
 	t += dt;
 	e.update(dt);
 
-		displayMe();
-	
+	//jugar a false en caso de que ganes para que funcione el menu
+	if (e.getCam().getPos().getX() == 1003 && e.getCam().getPos().getY() == 3 && e.getCam().getPos().getZ() == 0) {
+		jugar = false;
+	}
+	displayMe();
+
 }
-
-
 
 int main(int argc, char** argv) {
 
