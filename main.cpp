@@ -7,7 +7,7 @@
 #include "escena.h"
 #include "camara.h"
 #include "pared.h"
-#include "cubo.h"
+#include "cubo.h" // SIRVE PARA EL DIBUJO WIN
 #include "enemigo.h"
 
 using namespace std;
@@ -41,7 +41,8 @@ void read() {
 	ifstream myfile("Ranking.txt");
 	if (myfile.is_open()) {
 		while (getline(myfile, line)) {
-			cout << line << "\ n";
+			cout << "Puntuacion: ";
+			cout << line << "\n";
 		}
 		myfile.close();
 	}
@@ -128,6 +129,7 @@ void keyPressed(unsigned char key, int px, int py) {
 		jugar = true;
 		cam.setPos(Vector3D(0, 1.85, 5));
 		e.addC(cam);
+		e.setPoints(0);
 		cout << " ¡A jugar!";
 		cout << " \n";
 
@@ -137,7 +139,7 @@ void keyPressed(unsigned char key, int px, int py) {
 	case 'r':
 		if (jugar == false) {
 			cout << "Ranking de Puntuaciones: \n";
-
+			read();
 
 			menu();
 			
